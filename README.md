@@ -5,17 +5,15 @@
 [![Stackage Nightly](http://stackage.org/package/JuicyPixels-extra/badge/nightly)](http://stackage.org/nightly/package/JuicyPixels-extra)
 [![Stackage LTS](http://stackage.org/package/JuicyPixels-extra/badge/lts)](http://stackage.org/lts/package/JuicyPixels-extra)
 [![Build Status](https://travis-ci.org/mrkkrp/JuicyPixels-extra.svg?branch=master)](https://travis-ci.org/mrkkrp/JuicyPixels-extra)
+[![Coverage Status](https://coveralls.io/repos/mrkkrp/JuicyPixels-extra/badge.svg?branch=master&service=github)](https://coveralls.io/github/mrkkrp/JuicyPixels-extra?branch=master)
 
 Missing primitive stuff you shouldn't need to re-implement yourself. I think
 haddocks are pretty self-explanatory. Currently the package includes the
 following functionality:
 
-* resizing (with and without distortion, filling with your color of choice
-  is supported);
-
+* scaling (bi-cubic);
 * cropping;
-
-* flipping horizontally and vertically.
+* flipping horizontally and vertically and 90° rotation (left and right).
 
 ## License
 
