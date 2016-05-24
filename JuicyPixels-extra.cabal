@@ -58,7 +58,7 @@ flag dev
   default:            False
 
 library
-  build-depends:      base              >= 4.6 && < 5
+  build-depends:      base              >= 4.7 && < 5
                     , JuicyPixels       >= 3.2.6.4
   exposed-modules:    Codec.Picture.Extra
   if flag(dev)
@@ -71,7 +71,7 @@ test-suite tests
   main-is:            Spec.hs
   hs-source-dirs:     tests
   type:               exitcode-stdio-1.0
-  build-depends:      base              >= 4.6 && < 5
+  build-depends:      base              >= 4.7 && < 5
                     , JuicyPixels       >= 3.2.6.4
                     , JuicyPixels-extra >= 0.1.0
                     , hspec             >= 2.0
