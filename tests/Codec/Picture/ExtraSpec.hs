@@ -14,9 +14,11 @@ main = hspec spec
 
 spec :: Spec
 spec = do
-  describe "crop"             cropSpec
-  describe "flipHorizontally" flipHorizontallySpec
-  describe "flipVertically"   flipVerticallySpec
+  describe "crop"              cropSpec
+  describe "flipHorizontally"  flipHorizontallySpec
+  describe "flipVertically"    flipVerticallySpec
+  describe "rotateLeft90Spec"  rotateLeft90Spec
+  describe "rotateRight90Spec" rotateRight90Spec
 
 cropSpec :: Spec
 cropSpec =
@@ -41,6 +43,22 @@ flipVerticallySpec =
       checkWithFiles flipVertically
         "data-examples/lenna.png"
         "data-examples/lenna-vertical-flip.png"
+
+rotateLeft90Spec :: Spec
+rotateLeft90Spec =
+  context "when we rotate to the left by 90°" $
+    it "produces correct image" $
+      checkWithFiles rotateLeft90
+        "data-examples/lenna.png"
+        "data-examples/lenna-left-rotated.png"
+
+rotateRight90Spec :: Spec
+rotateRight90Spec =
+  context "when we rotate to the right by 90°" $
+    it "produces correct image" $
+      checkWithFiles rotateRight90
+        "data-examples/lenna.png"
+        "data-examples/lenna-right-rotated.png"
 
 -- | Run given transforming function on image loaded from one file and
 -- compare resulting image with contents of another file.

@@ -70,9 +70,15 @@ flipVertically img@Image {..} =
 -- | Rotate image to the left by 90°.
 
 rotateLeft90 :: Pixel a => Image a -> Image a
-rotateLeft90 = undefined -- TODO
+rotateLeft90 img@Image {..} =
+  generateImage gen imageHeight imageWidth
+  where
+    gen x y = pixelAt img y x
 
 -- | Rotate image to the right by 90°.
 
 rotateRight90 :: Pixel a => Image a -> Image a
-rotateRight90 = undefined -- TODO
+rotateRight90 img@Image {..} =
+  generateImage gen imageHeight imageWidth
+  where
+    gen x y = pixelAt img y (imageHeight - 1 - x)
