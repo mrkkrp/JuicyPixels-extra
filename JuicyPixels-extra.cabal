@@ -40,11 +40,13 @@ maintainer:           Mark Karpov <markkarpov@openmailbox.org>
 homepage:             https://github.com/mrkkrp/JuicyPixels-extra
 bug-reports:          https://github.com/mrkkrp/JuicyPixels-extra/issues
 category:             Graphics, Image
-synopsis:             Efficiently resize, crop, flip images with JuicyPixels
+synopsis:             Efficiently scale, crop, flip images with JuicyPixels
 build-type:           Simple
-description:          Efficiently resize, crop, flip images with JuicyPixels.
+description:          Efficiently scale, crop, flip images with JuicyPixels.
 extra-source-files:   CHANGELOG.md
                     , README.md
+                    , data-examples/lenna.png
+                    , data-examples/lenna-cropped.png
 
 source-repository head
   type:               git
