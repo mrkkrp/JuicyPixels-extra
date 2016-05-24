@@ -13,8 +13,10 @@ main :: IO ()
 main = hspec spec
 
 spec :: Spec
-spec =
-  describe "crop" cropSpec
+spec = do
+  describe "crop"             cropSpec
+  describe "flipHorizontally" flipHorizontallySpec
+  describe "flipVertically"   flipVerticallySpec
 
 cropSpec :: Spec
 cropSpec =
@@ -22,8 +24,25 @@ cropSpec =
     it "produces correct image" $ do
       (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
       (Right (ImageRGB8 cropped)) <- readImage "data-examples/lenna-cropped.png"
-      let result = crop 211 210 178 191 original
-      result `blindlySatisfy` sameImage cropped
+      crop 211 210 178 191 original `blindlySatisfy` sameImage cropped
+
+flipHorizontallySpec :: Spec
+flipHorizontallySpec =
+  context "when we flip horizontally" $
+    it "produces correct image" $ do
+      (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
+      (Right (ImageRGB8 flipped)) <-
+        readImage "data-examples/lenna-horizontal-flip.png"
+      flipHorizontally original `blindlySatisfy` sameImage flipped
+
+flipVerticallySpec :: Spec
+flipVerticallySpec =
+  context "when we flip vertically" $
+    it "produces correct image" $ do
+      (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
+      (Right (ImageRGB8 flipped)) <-
+        readImage "data-examples/lenna-vertical-flip.png"
+      flipVertically original `blindlySatisfy` sameImage flipped
 
 blindlySatisfy :: a -> (a -> Bool) -> Expectation
 v `blindlySatisfy` p =

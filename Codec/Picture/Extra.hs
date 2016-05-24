@@ -54,12 +54,18 @@ crop x' y' w' h' img@Image {..} =
 -- | Flip image horizontally.
 
 flipHorizontally :: Pixel a => Image a -> Image a
-flipHorizontally = undefined -- TODO
+flipHorizontally img@Image {..} =
+  generateImage gen imageWidth imageHeight
+  where
+    gen x = pixelAt img (imageWidth - 1 - x)
 
 -- | Flip image vertically.
 
-flipVertically :: Pixel a => Image a -> Image s
-flipVertically = undefined -- TODO
+flipVertically :: Pixel a => Image a -> Image a
+flipVertically img@Image {..} =
+  generateImage gen imageWidth imageHeight
+  where
+    gen x y = pixelAt img x (imageHeight - 1 - y)
 
 -- | Rotate image to the left by 90°.
 
