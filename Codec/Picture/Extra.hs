@@ -1,3 +1,14 @@
+-- |
+-- Module      :  Codec.Picture.Extra
+-- Copyright   :  © 2016 Mark Karpov
+-- License     :  BSD 3 clause
+--
+-- Maintainer  :  Mark Karpov <markkarpov@openmailbox.org>
+-- Stability   :  experimental
+-- Portability :  portable
+--
+-- Utilities for image transformation with JuicyPixels.
+
 {-# LANGUAGE RecordWildCards #-}
 
 module Codec.Picture.Extra
