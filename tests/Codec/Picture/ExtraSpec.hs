@@ -21,32 +21,48 @@ spec = do
 cropSpec :: Spec
 cropSpec =
   context "when we pass arguments within image size" $
-    it "produces correct image" $ do
-      (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
-      (Right (ImageRGB8 cropped)) <- readImage "data-examples/lenna-cropped.png"
-      crop 211 210 178 191 original `blindlySatisfy` sameImage cropped
+    it "produces correct image" $
+      checkWithFiles (crop 211 210 178 191)
+        "data-examples/lenna.png"
+        "data-examples/lenna-cropped.png"
 
 flipHorizontallySpec :: Spec
 flipHorizontallySpec =
   context "when we flip horizontally" $
-    it "produces correct image" $ do
-      (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
-      (Right (ImageRGB8 flipped)) <-
-        readImage "data-examples/lenna-horizontal-flip.png"
-      flipHorizontally original `blindlySatisfy` sameImage flipped
+    it "produces correct image" $
+      checkWithFiles flipHorizontally
+        "data-examples/lenna.png"
+        "data-examples/lenna-horizontal-flip.png"
 
 flipVerticallySpec :: Spec
 flipVerticallySpec =
   context "when we flip vertically" $
-    it "produces correct image" $ do
-      (Right (ImageRGB8 original)) <- readImage "data-examples/lenna.png"
-      (Right (ImageRGB8 flipped)) <-
-        readImage "data-examples/lenna-vertical-flip.png"
-      flipVertically original `blindlySatisfy` sameImage flipped
+    it "produces correct image" $
+      checkWithFiles flipVertically
+        "data-examples/lenna.png"
+        "data-examples/lenna-vertical-flip.png"
+
+-- | Run given transforming function on image loaded from one file and
+-- compare resulting image with contents of another file.
+
+checkWithFiles
+  :: (Image PixelRGB8 -> Image PixelRGB8) -- ^ Transformation to test
+  -> FilePath          -- ^ Where to get the original image
+  -> FilePath          -- ^ Where to get image to compare with
+  -> Expectation
+checkWithFiles f opath fpath = do
+  (Right (ImageRGB8 original)) <- readImage opath
+  (Right (ImageRGB8 flipped))  <- readImage fpath
+  f original `blindlySatisfy` sameImage flipped
+
+-- | The same as 'shouldSatisfy', but doesn't care if its argument is
+-- instance of 'Show' or not.
 
 blindlySatisfy :: a -> (a -> Bool) -> Expectation
 v `blindlySatisfy` p =
   unless (p v) (expectationFailure "predicate failed")
+
+-- | Equality test for images.
 
 sameImage :: Image PixelRGB8 -> Image PixelRGB8 -> Bool
 sameImage a b =
