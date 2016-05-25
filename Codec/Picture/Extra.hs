@@ -25,10 +25,11 @@ where
 
 import Codec.Picture
 import Control.Monad.ST
-import Data.Word (Word8)
 import qualified Codec.Picture.Types as M
 
--- | Scale image using bi-linear interpolation.
+-- | Scale image using bi-linear interpolation. This is specialized to
+-- 'PixelRGB8' only for speed (polymorphic version is easily written, but
+-- it's more than twice as slow).
 
 scaleBilinear
   :: Int               -- ^ Desired width
@@ -71,7 +72,7 @@ addp :: PixelRGB8 -> PixelRGB8 -> PixelRGB8
 addp = mixWith (const f)
   where
     f x y = fromIntegral $
-      (0xff :: Word8) `min` (fromIntegral x + fromIntegral y)
+      (0xff :: Pixel8) `min` (fromIntegral x + fromIntegral y)
 {-# INLINE addp #-}
 
 -- | Crop given image. If supplied coordinates are greater than size of
