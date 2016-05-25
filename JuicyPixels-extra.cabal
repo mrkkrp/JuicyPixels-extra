@@ -51,6 +51,8 @@ extra-source-files:   CHANGELOG.md
                     , data-examples/lenna-vertical-flip.png
                     , data-examples/lenna-left-rotated.png
                     , data-examples/lenna-right-rotated.png
+                    , data-examples/lenna-scaled-down.png
+                    , data-examples/lenna-scaled-up.png
 
 source-repository head
   type:               git

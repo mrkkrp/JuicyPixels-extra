@@ -14,11 +14,30 @@ main = hspec spec
 
 spec :: Spec
 spec = do
+  describe "scaleBilinear"     scaleBilinearSpec
   describe "crop"              cropSpec
   describe "flipHorizontally"  flipHorizontallySpec
   describe "flipVertically"    flipVerticallySpec
   describe "rotateLeft90Spec"  rotateLeft90Spec
   describe "rotateRight90Spec" rotateRight90Spec
+
+scaleBilinearSpec :: Spec
+scaleBilinearSpec = do
+  context "when called with orginial dimensions" $
+    it "produces the same image" $
+      checkWithFiles (scaleBilinear 512 512)
+        "data-examples/lenna.png"
+        "data-examples/lenna.png"
+  context "when we scale down" $
+    it "produces correct image" $
+      checkWithFiles (scaleBilinear 100 100)
+        "data-examples/lenna.png"
+        "data-examples/lenna-scaled-down.png"
+  context "when we scale up" $
+    it "produces correct image" $
+      checkWithFiles (scaleBilinear 600 600)
+        "data-examples/lenna.png"
+        "data-examples/lenna-scaled-up.png"
 
 cropSpec :: Spec
 cropSpec =

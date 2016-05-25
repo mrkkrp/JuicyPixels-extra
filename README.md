@@ -11,7 +11,7 @@ Missing primitive stuff you shouldn't need to re-implement yourself. I think
 haddocks are pretty self-explanatory. Currently the package includes the
 following functionality:
 
-* scaling (bi-cubic);
+* scaling (bi-linear interpolation);
 * cropping;
 * flipping horizontally and vertically and 90° rotation (left and right).
 
