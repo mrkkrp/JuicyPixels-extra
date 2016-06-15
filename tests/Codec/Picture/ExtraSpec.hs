@@ -89,8 +89,8 @@ checkWithFiles
   -> Expectation
 checkWithFiles f opath fpath = do
   (Right (ImageRGB8 original)) <- readImage opath
-  (Right (ImageRGB8 flipped))  <- readImage fpath
-  f original `blindlySatisfy` sameImage flipped
+  (Right (ImageRGB8 result))   <- readImage fpath
+  f original `blindlySatisfy` sameImage result
 
 -- | The same as 'shouldSatisfy', but doesn't care if its argument is
 -- instance of 'Show' or not.
