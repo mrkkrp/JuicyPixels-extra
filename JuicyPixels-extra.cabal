@@ -43,16 +43,9 @@ category:             Graphics, Image
 synopsis:             Efficiently scale, crop, flip images with JuicyPixels
 build-type:           Simple
 description:          Efficiently scale, crop, flip images with JuicyPixels.
-extra-source-files:   CHANGELOG.md
+extra-doc-files:      CHANGELOG.md
                     , README.md
-                    , data-examples/lenna.png
-                    , data-examples/lenna-cropped.png
-                    , data-examples/lenna-horizontal-flip.png
-                    , data-examples/lenna-vertical-flip.png
-                    , data-examples/lenna-left-rotated.png
-                    , data-examples/lenna-right-rotated.png
-                    , data-examples/lenna-scaled-down.png
-                    , data-examples/lenna-scaled-up.png
+data-files:           data-examples/*.png
 
 source-repository head
   type:               git
