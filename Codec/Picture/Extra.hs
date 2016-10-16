@@ -93,6 +93,7 @@ crop x' y' w' h' img@Image {..} =
     y = min (imageHeight - 1) y'
     w = min (imageWidth  - x) w'
     h = min (imageWidth  - y) h'
+{-# INLINEABLE crop #-}
 
 -- | Flip image horizontally.
 
@@ -101,6 +102,7 @@ flipHorizontally img@Image {..} =
   generateImage gen imageWidth imageHeight
   where
     gen x = pixelAt img (imageWidth - 1 - x)
+{-# INLINEABLE flipHorizontally #-}
 
 -- | Flip image vertically.
 
@@ -109,6 +111,7 @@ flipVertically img@Image {..} =
   generateImage gen imageWidth imageHeight
   where
     gen x y = pixelAt img x (imageHeight - 1 - y)
+{-# INLINEABLE flipVertically #-}
 
 -- | Rotate image to the left by 90°.
 
@@ -117,6 +120,7 @@ rotateLeft90 img@Image {..} =
   generateImage gen imageHeight imageWidth
   where
     gen x y = pixelAt img y x
+{-# INLINEABLE rotateLeft90 #-}
 
 -- | Rotate image to the right by 90°.
 
@@ -125,3 +129,4 @@ rotateRight90 img@Image {..} =
   generateImage gen imageHeight imageWidth
   where
     gen x y = pixelAt img y (imageHeight - 1 - x)
+{-# INLINEABLE rotateRight90 #-}
