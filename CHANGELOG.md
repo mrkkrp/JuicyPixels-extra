@@ -1,4 +1,4 @@
-## Juicy Pixels Extra 0.2.0
+## Juicy Pixels Extra 0.1.1
 
 * Added benchmarks.
 
