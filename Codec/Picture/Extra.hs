@@ -20,7 +20,10 @@ module Codec.Picture.Extra
   , flipHorizontally
   , flipVertically
   , rotateLeft90
-  , rotateRight90 )
+  , rotateRight90
+  , rotate180
+  , beside
+  , below )
 where
 
 import Codec.Picture
@@ -130,3 +133,38 @@ rotateRight90 img@Image {..} =
   where
     gen x y = pixelAt img y (imageHeight - 1 - x)
 {-# INLINEABLE rotateRight90 #-}
+
+
+-- | Rotate image by 180, i.e flip both vertically and horizontally.
+
+rotate180 :: Pixel a => Image a -> Image a
+rotate180 img@(Image w h _) = generateImage g w h
+  where
+    g x y = pixelAt img (w - 1 - x) (h - 1 - y)
+{-# INLINEABLE rotate180 #-}
+
+-- | Create an image by placing two images side by side.
+--   If the images are of differnet heights the smaller height is used.
+
+beside :: Pixel a => Image a -> Image a -> Image a
+beside img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
+  generateImage g (w1 + w2) h
+  where
+    g x
+      | x < w1 = pixelAt img1 x
+      | otherwise = pixelAt img2 (x - w1)
+    h = min h1 h2
+{-# INLINEABLE beside #-}
+
+-- | Create an image by placing the first iamge on top of the second
+--   If the images are of differnet widths the smaller width is used.
+
+below :: Pixel a => Image a -> Image a -> Image a
+below img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
+  generateImage g w (h1 + h2)
+  where
+    g x y
+      | y < h1 = pixelAt img1 x y
+      | otherwise = pixelAt img2 x (y - h1)
+    w = min w1 w2
+{-# INLINEABLE below #-}

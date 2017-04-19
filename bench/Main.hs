@@ -58,7 +58,19 @@ main = defaultMain
   , bgroup "rotateRight90"
     [ baction "512 × 512" rotateRight90 "data-examples/lenna.png"
     , baction "100 × 100" rotateRight90 "data-examples/lenna-scaled-down.png" ]
+  , bgroup "rotate180"
+    [ baction "512 × 512" rotate180 "data-examples/lenna.png"
+    , baction "100 × 100" rotate180 "data-examples/lenna-scaled-down.png" ]
+  , bgroup "beside"
+    [ baction "1024 × 512" beside' "data-examples/lenna.png"
+    , baction "200 × 100"  beside' "data-examples/lenna-scaled-down.png" ]
+  , bgroup "below"
+    [ baction "512 × 1024" below' "data-examples/lenna.png"
+    , baction "100 × 200"  below' "data-examples/lenna-scaled-down.png" ]
   ]
+  where
+    beside' img = beside img img
+    below' img = below img img
 
 -- | Run a benchmark given function to benchmark and where to get image to
 -- pass as an input.
