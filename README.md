@@ -13,7 +13,8 @@ following functionality:
 
 * scaling (bi-linear interpolation);
 * cropping;
-* flipping horizontally and vertically and 90° rotation (left and right).
+* flipping horizontally and vertically and 90° and 180° rotation (left and right).
+* aligning two images side by side or one on top of the other.
 
 ## License
 
