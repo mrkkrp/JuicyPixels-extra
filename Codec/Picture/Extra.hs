@@ -29,6 +29,7 @@ where
 import Codec.Picture
 import Control.Monad.ST
 import qualified Codec.Picture.Types as M
+import Data.List (foldl1')
 
 -- | Scale image using bi-linear interpolation. This is specialized to
 -- 'PixelRGB8' only for speed (polymorphic version is easily written, but
@@ -146,25 +147,31 @@ rotate180 img@(Image w h _) = generateImage g w h
 -- | Create an image by placing two images side by side.
 --   If the images are of differnet heights the smaller height is used.
 
-beside :: Pixel a => Image a -> Image a -> Image a
-beside img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
-  generateImage g (w1 + w2) h
+beside :: Pixel a => [Image a] -> Image a
+beside = foldl1' go 
   where
-    g x
-      | x < w1 = pixelAt img1 x
-      | otherwise = pixelAt img2 (x - w1)
-    h = min h1 h2
+    go :: Pixel a => Image a -> Image a -> Image a
+    go img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
+      generateImage g (w1 + w2) h
+      where
+        g x
+          | x < w1 = pixelAt img1 x
+          | otherwise = pixelAt img2 (x - w1)
+        h = min h1 h2
 {-# INLINEABLE beside #-}
 
 -- | Create an image by placing the first iamge on top of the second
 --   If the images are of differnet widths the smaller width is used.
 
-below :: Pixel a => Image a -> Image a -> Image a
-below img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
-  generateImage g w (h1 + h2)
+below :: Pixel a => [Image a] -> Image a
+below = foldl1' go
   where
-    g x y
-      | y < h1 = pixelAt img1 x y
-      | otherwise = pixelAt img2 x (y - h1)
-    w = min w1 w2
+    go :: Pixel a => Image a -> Image a -> Image a
+    go img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
+      generateImage g w (h1 + h2)
+      where
+        g x y
+          | y < h1 = pixelAt img1 x y
+          | otherwise = pixelAt img2 x (y - h1)
+        w = min w1 w2
 {-# INLINEABLE below #-}

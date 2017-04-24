@@ -52,9 +52,6 @@ spec = do
   describe "flipVertically"    flipVerticallySpec
   describe "rotateLeft90Spec"  rotateLeft90Spec
   describe "rotateRight90Spec" rotateRight90Spec
-  describe "rotate180Spec"     rotate180Spec
-  describe "besideSpec"        besideSpec
-  describe "belowSpec"         belowSpec
 
 scaleBilinearSpec :: Spec
 scaleBilinearSpec = do
@@ -113,34 +110,6 @@ rotateRight90Spec =
       checkWithFiles rotateRight90
         "data-examples/lenna.png"
         "data-examples/lenna-right-rotated.png"
-
-rotate180Spec :: Spec
-rotate180Spec =
-  context "when we rotate by 180°" $
-    it "produces correct image" $
-      checkWithFiles rotate180
-        "data-examples/lenna.png"
-        "data-examples/lenna-180.png"
-
-besideSpec :: Spec
-besideSpec =
-  context "when we place 2 iamges side by side" $
-    it "produces correct image" $
-      checkWithFiles beside'
-        "data-examples/lenna.png"
-        "data-examples/lenna-beside.png"
-  where
-    beside' img = beside img img
-
-belowSpec :: Spec
-belowSpec =
-  context "when we place 2 iamges side by side" $
-    it "produces correct image" $
-      checkWithFiles below'
-        "data-examples/lenna.png"
-        "data-examples/lenna-below.png"
-  where
-    below' img = below img img
 
 -- | Run given transforming function on image loaded from one file and
 -- compare resulting image with contents of another file.
