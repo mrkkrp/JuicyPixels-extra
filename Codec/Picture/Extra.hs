@@ -144,8 +144,8 @@ rotate180 img@(Image w h _) = generateImage g w h
     g x y = pixelAt img (w - 1 - x) (h - 1 - y)
 {-# INLINEABLE rotate180 #-}
 
--- | Create an image by placing two images side by side.
---   If the images are of differnet heights the smaller height is used.
+-- | Create an image by placing two or more images side by side.
+--   If the images are of differnet heights the smallest height is used.
 
 beside :: Pixel a => [Image a] -> Image a
 beside = foldl1' go 
@@ -160,8 +160,8 @@ beside = foldl1' go
         h = min h1 h2
 {-# INLINEABLE beside #-}
 
--- | Create an image by placing the first iamge on top of the second
---   If the images are of differnet widths the smaller width is used.
+-- | Create an image by placing the images in a vertical stack.
+--   If the images are of differnet widths the smallest width is used.
 
 below :: Pixel a => [Image a] -> Image a
 below = foldl1' go
