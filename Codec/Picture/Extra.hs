@@ -22,6 +22,7 @@ module Codec.Picture.Extra
   , rotateLeft90
   , rotateRight90
   , rotate180
+    -- * Other
   , beside
   , below )
 where
