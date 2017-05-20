@@ -32,7 +32,7 @@ import Control.Monad.ST
 import qualified Codec.Picture.Types as M
 import Data.List (foldl1')
 
--- | Scale image using bi-linear interpolation. This is specialized to
+-- | Scale an image using bi-linear interpolation. This is specialized to
 -- 'PixelRGB8' only for speed (polymorphic version is easily written, but
 -- it's more than twice as slow).
 
@@ -80,7 +80,7 @@ addp = mixWith (const f)
       (0xff :: Pixel8) `min` (fromIntegral x + fromIntegral y)
 {-# INLINE addp #-}
 
--- | Crop given image. If supplied coordinates are greater than size of
+-- | Crop a given image. If supplied coordinates are greater than size of
 -- original image, image boundaries are used instead.
 
 crop :: Pixel a
@@ -100,7 +100,7 @@ crop x' y' w' h' img@Image {..} =
     h = min (imageWidth  - y) h'
 {-# INLINEABLE crop #-}
 
--- | Flip image horizontally.
+-- | Flip an image horizontally.
 
 flipHorizontally :: Pixel a => Image a -> Image a
 flipHorizontally img@Image {..} =
@@ -109,7 +109,7 @@ flipHorizontally img@Image {..} =
     gen x = pixelAt img (imageWidth - 1 - x)
 {-# INLINEABLE flipHorizontally #-}
 
--- | Flip image vertically.
+-- | Flip an image vertically.
 
 flipVertically :: Pixel a => Image a -> Image a
 flipVertically img@Image {..} =
@@ -118,7 +118,7 @@ flipVertically img@Image {..} =
     gen x y = pixelAt img x (imageHeight - 1 - y)
 {-# INLINEABLE flipVertically #-}
 
--- | Rotate image to the left by 90°.
+-- | Rotate an image to the left by 90°.
 
 rotateLeft90 :: Pixel a => Image a -> Image a
 rotateLeft90 img@Image {..} =
@@ -127,7 +127,7 @@ rotateLeft90 img@Image {..} =
     gen x y = pixelAt img y x
 {-# INLINEABLE rotateLeft90 #-}
 
--- | Rotate image to the right by 90°.
+-- | Rotate an image to the right by 90°.
 
 rotateRight90 :: Pixel a => Image a -> Image a
 rotateRight90 img@Image {..} =
@@ -136,7 +136,7 @@ rotateRight90 img@Image {..} =
     gen x y = pixelAt img y (imageHeight - 1 - x)
 {-# INLINEABLE rotateRight90 #-}
 
--- | Rotate image by 180°, i.e flip both vertically and horizontally.
+-- | Rotate an image by 180°, i.e flip both vertically and horizontally.
 --
 -- @since 0.2.0
 

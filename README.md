@@ -7,15 +7,8 @@
 [![Build Status](https://travis-ci.org/mrkkrp/JuicyPixels-extra.svg?branch=master)](https://travis-ci.org/mrkkrp/JuicyPixels-extra)
 [![Coverage Status](https://coveralls.io/repos/mrkkrp/JuicyPixels-extra/badge.svg?branch=master&service=github)](https://coveralls.io/github/mrkkrp/JuicyPixels-extra?branch=master)
 
-Missing primitive stuff you shouldn't need to re-implement yourself. I think
-haddocks are pretty self-explanatory. Currently the package includes the
-following functionality:
-
-* scaling (bi-linear interpolation);
-* cropping;
-* flipping horizontally and vertically;
-* 90° and 180° rotation (left and right);
-* aligning several images side by side or one on top of the other.
+Missing primitives you shouldn't need to re-implement yourself. I think the
+Haddocks are pretty self-explanatory, so head straight to them.
 
 ## License
 
