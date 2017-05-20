@@ -1,3 +1,7 @@
+## Juicy Pixels Extra 0.2.1
+
+* Documentation improvements.
+
 ## Juicy Pixels Extra 0.2.0
 
 * Added `rotate180`, `beside`, and `below`.
