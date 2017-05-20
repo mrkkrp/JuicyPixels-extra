@@ -1,7 +1,7 @@
 --
 -- Cabal configuration for ‘JuicyPixels-extra’ package.
 --
--- Copyright © 2016–2017 Mark Karpov <markkarpov@openmailbox.org>
+-- Copyright © 2016–2017 Mark Karpov <markkarpov92@gmail.com>
 --
 -- Redistribution and use in source and binary forms, with or without
 -- modification, are permitted provided that the following conditions are
@@ -36,8 +36,8 @@ cabal-version:        >= 1.10
 tested-with:          GHC==7.8.4, GHC==7.10.3, GHC==8.0.2
 license:              BSD3
 license-file:         LICENSE.md
-author:               Mark Karpov <markkarpov@openmailbox.org>
-maintainer:           Mark Karpov <markkarpov@openmailbox.org>
+author:               Mark Karpov <markkarpov92@gmail.com>
+maintainer:           Mark Karpov <markkarpov92@gmail.com>
 homepage:             https://github.com/mrkkrp/JuicyPixels-extra
 bug-reports:          https://github.com/mrkkrp/JuicyPixels-extra/issues
 category:             Graphics, Image
