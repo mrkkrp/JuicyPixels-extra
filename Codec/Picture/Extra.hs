@@ -97,7 +97,7 @@ crop x' y' w' h' img@Image {..} =
     x = min (imageWidth  - 1) x'
     y = min (imageHeight - 1) y'
     w = min (imageWidth  - x) w'
-    h = min (imageWidth  - y) h'
+    h = min (imageHeight  - y) h'
 {-# INLINEABLE crop #-}
 
 -- | Flip an image horizontally.
