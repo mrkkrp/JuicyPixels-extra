@@ -1,3 +1,8 @@
+## Juicy Pixels Extra 0.2.2
+
+* Fixed a bug in the `crop` function related to incorrect calculation of new
+  height in some cases.
+
 ## Juicy Pixels Extra 0.2.1
 
 * Documentation improvements.
