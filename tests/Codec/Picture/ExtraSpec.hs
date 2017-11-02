@@ -43,12 +43,17 @@ scaleBilinearSpec = do
         "data-examples/lenna-scaled-up.png"
 
 cropSpec :: Spec
-cropSpec =
-  context "when we pass arguments within image size" $
+cropSpec = do
+  context "when we pass arguments within image size (square)" $
     it "produces correct image" $
       checkWithFiles (crop 211 210 178 191)
         "data-examples/lenna.png"
         "data-examples/lenna-cropped.png"
+  context "when we pass arguments within image size (vertical)" $
+    it "produces correct image" $
+      checkWithFiles (crop 0 512 512 512)
+        "data-examples/lenna-below.png"
+        "data-examples/lenna.png"
 
 flipHorizontallySpec :: Spec
 flipHorizontallySpec =
