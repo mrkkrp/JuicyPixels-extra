@@ -1,3 +1,7 @@
+## Juicy Pixels Extra 0.3.0
+
+* Made the function `scaleBilinear` polymorphic in pixel type.
+
 ## Juicy Pixels Extra 0.2.2
 
 * Fixed a bug in the `crop` function related to incorrect calculation of new
