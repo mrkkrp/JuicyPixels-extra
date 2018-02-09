@@ -9,7 +9,9 @@
 --
 -- Utilities for image transformation with JuicyPixels.
 
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE CPP              #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE RecordWildCards  #-}
 
 module Codec.Picture.Extra
   ( -- * Scaling
@@ -29,18 +31,18 @@ where
 
 import Codec.Picture
 import Control.Monad.ST
-import qualified Codec.Picture.Types as M
 import Data.List (foldl1')
+import qualified Codec.Picture.Types as M
 
 -- | Scale an image using bi-linear interpolation. This is specialized to
 -- 'PixelRGB8' only for speed (polymorphic version is easily written, but
 -- it's more than twice as slow).
 
-scaleBilinear
-  :: Int               -- ^ Desired width
+scaleBilinear :: (Pixel a, Integral (PixelBaseComponent a))
+  => Int               -- ^ Desired width
   -> Int               -- ^ Desired height
-  -> Image PixelRGB8   -- ^ Original image
-  -> Image PixelRGB8   -- ^ Scaled image
+  -> Image a           -- ^ Original image
+  -> Image a           -- ^ Scaled image
 scaleBilinear width height img@Image {..} = runST $ do
   mimg <- M.newMutableImage width height
   let sx, sy :: Float
@@ -59,7 +61,7 @@ scaleBilinear width height img@Image {..} = runST $ do
                 δy = yf - fromIntegral y
                 pixelAt' i j =
                   if i >= imageWidth || j >= imageHeight
-                    then PixelRGB8 0 0 0
+                    then toBlack (pixelAt img 0 0)
                     else pixelAt img i j
             writePixel mimg x' y' $
               mulp (pixelAt' x y) ((1 - δx) * (1 - δy)) `addp`
@@ -69,11 +71,32 @@ scaleBilinear width height img@Image {..} = runST $ do
             go (x' + 1) y'
   go 0 0
 
-mulp :: PixelRGB8 -> Float -> PixelRGB8
+#define scaleBilinear_spec(pixel) \
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image pixel -> Image pixel #-}
+
+scaleBilinear_spec(M.PixelRGBA16)
+scaleBilinear_spec(M.PixelRGBA8)
+scaleBilinear_spec(M.PixelCMYK16)
+scaleBilinear_spec(M.PixelCMYK8)
+scaleBilinear_spec(M.PixelYCbCr8)
+scaleBilinear_spec(M.PixelRGB16)
+scaleBilinear_spec(M.PixelYCbCrK8)
+scaleBilinear_spec(M.PixelRGB8)
+scaleBilinear_spec(M.PixelYA16)
+scaleBilinear_spec(M.PixelYA8)
+scaleBilinear_spec(M.Pixel32)
+scaleBilinear_spec(M.Pixel16)
+scaleBilinear_spec(M.Pixel8)
+
+toBlack :: Pixel a => a -> a
+toBlack = colorMap (const 0)
+{-# INLINE toBlack #-}
+
+mulp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> Float -> a
 mulp pixel x = colorMap (floor . (* x) . fromIntegral) pixel
 {-# INLINE mulp #-}
 
-addp :: PixelRGB8 -> PixelRGB8 -> PixelRGB8
+addp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> a -> a
 addp = mixWith (const f)
   where
     f x y = fromIntegral $
