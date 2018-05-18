@@ -34,9 +34,7 @@ import Control.Monad.ST
 import Data.List (foldl1')
 import qualified Codec.Picture.Types as M
 
--- | Scale an image using bi-linear interpolation. This is specialized to
--- 'PixelRGB8' only for speed (polymorphic version is easily written, but
--- it's more than twice as slow).
+-- | Scale an image using bi-linear interpolation.
 
 scaleBilinear :: (Pixel a, Integral (PixelBaseComponent a))
   => Int               -- ^ Desired width
