@@ -27,7 +27,7 @@ flag dev
 
 library
   build-depends:      base              >= 4.7 && < 5
-                    , JuicyPixels       >= 3.2.6.4 && < 3.3
+                    , JuicyPixels       >= 3.2.6.4 && < 3.4
   exposed-modules:    Codec.Picture.Extra
   if flag(dev)
     ghc-options:      -Wall -Werror
@@ -46,7 +46,7 @@ test-suite tests
   hs-source-dirs:     tests
   type:               exitcode-stdio-1.0
   build-depends:      base              >= 4.7 && < 5
-                    , JuicyPixels       >= 3.2.6.4 && < 3.3
+                    , JuicyPixels       >= 3.2.6.4 && < 3.4
                     , JuicyPixels-extra
                     , hspec             >= 2.0
   build-tools:        hspec-discover    >= 2.0 && < 3.0
@@ -62,7 +62,7 @@ benchmark bench
   hs-source-dirs:     bench
   type:               exitcode-stdio-1.0
   build-depends:      base              >= 4.7 && < 5.0
-                    , JuicyPixels       >= 3.2.6.4 && < 3.3
+                    , JuicyPixels       >= 3.2.6.4 && < 3.4
                     , JuicyPixels-extra
                     , criterion         >= 0.6.2.1 && < 1.6
   if flag(dev)
