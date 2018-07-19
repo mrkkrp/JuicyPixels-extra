@@ -9,9 +9,11 @@
 --
 -- Utilities for image transformation with JuicyPixels.
 
-{-# LANGUAGE CPP              #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE RecordWildCards  #-}
+{-# LANGUAGE CPP                 #-}
+{-# LANGUAGE FlexibleContexts    #-}
+{-# LANGUAGE RankNTypes          #-}
+{-# LANGUAGE RecordWildCards     #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Codec.Picture.Extra
   ( -- * Scaling
@@ -36,7 +38,11 @@ import qualified Codec.Picture.Types as M
 
 -- | Scale an image using bi-linear interpolation.
 
-scaleBilinear :: (Pixel a, Integral (PixelBaseComponent a))
+scaleBilinear
+  :: ( Pixel a
+     , Bounded (PixelBaseComponent a)
+     , Integral (PixelBaseComponent a)
+     )
   => Int               -- ^ Desired width
   -> Int               -- ^ Desired height
   -> Image a           -- ^ Original image
@@ -94,11 +100,15 @@ mulp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> Float -> a
 mulp pixel x = colorMap (floor . (* x) . fromIntegral) pixel
 {-# INLINE mulp #-}
 
-addp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> a -> a
+addp
+  :: forall a. ( Pixel a
+               , Bounded (PixelBaseComponent a)
+               , Integral (PixelBaseComponent a)
+               ) => a -> a -> a
 addp = mixWith (const f)
   where
     f x y = fromIntegral $
-      (0xff :: Pixel8) `min` (fromIntegral x + fromIntegral y)
+      (maxBound :: PixelBaseComponent a) `min` (fromIntegral x + fromIntegral y)
 {-# INLINE addp #-}
 
 -- | Crop a given image. If supplied coordinates are greater than size of

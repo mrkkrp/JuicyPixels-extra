@@ -1,3 +1,8 @@
+## Juicy Pixels Extra 0.4.0
+
+* Fix `scaleBilinear` so it works correctly with images that have 16-bit
+  components.
+
 ## Juicy Pixels Extra 0.3.0
 
 * Made the function `scaleBilinear` polymorphic in pixel type.
