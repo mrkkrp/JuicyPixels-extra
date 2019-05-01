@@ -1,7 +1,7 @@
 name:                 JuicyPixels-extra
 version:              0.4.0
 cabal-version:        1.18
-tested-with:          GHC==7.10.3, GHC==8.0.2, GHC==8.2.2, GHC==8.4.4, GHC==8.6.5
+tested-with:          GHC==8.0.2, GHC==8.2.2, GHC==8.4.4, GHC==8.6.5
 license:              BSD3
 license-file:         LICENSE.md
 author:               Mark Karpov <markkarpov92@gmail.com>
@@ -26,14 +26,14 @@ flag dev
   default:            False
 
 library
-  build-depends:      base              >= 4.8 && < 5
+  build-depends:      base              >= 4.9 && < 5
                     , JuicyPixels       >= 3.2.6.4 && < 3.4
   exposed-modules:    Codec.Picture.Extra
   if flag(dev)
     ghc-options:      -Wall -Werror
   else
     ghc-options:      -O2 -Wall
-  if flag(dev) && impl(ghc >= 8.0)
+  if flag(dev)
     ghc-options:      -Wcompat
                       -Wincomplete-record-updates
                       -Wincomplete-uni-patterns
@@ -45,7 +45,7 @@ test-suite tests
   main-is:            Spec.hs
   hs-source-dirs:     tests
   type:               exitcode-stdio-1.0
-  build-depends:      base              >= 4.8 && < 5
+  build-depends:      base              >= 4.9 && < 5
                     , JuicyPixels       >= 3.2.6.4 && < 3.4
                     , JuicyPixels-extra
                     , hspec             >= 2.0
@@ -61,7 +61,7 @@ benchmark bench
   main-is:            Main.hs
   hs-source-dirs:     bench
   type:               exitcode-stdio-1.0
-  build-depends:      base              >= 4.8 && < 5.0
+  build-depends:      base              >= 4.9 && < 5
                     , JuicyPixels       >= 3.2.6.4 && < 3.4
                     , JuicyPixels-extra
                     , criterion         >= 0.6.2.1 && < 1.6

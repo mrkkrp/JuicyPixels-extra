@@ -1,3 +1,7 @@
+## Unreleased
+
+* Dropped support for GHC 7.10.
+
 ## Juicy Pixels Extra 0.4.0
 
 * Fix `scaleBilinear` so it works correctly with images that have 16-bit
