@@ -1,4 +1,7 @@
-## Unreleased
+## Juicy Pixels Extra 0.4.1
+
+* Fixed left rotation so that `rotateLeft90 . rotateRight90` is now identity
+  function.
 
 * Dropped support for GHC 7.10.
 
