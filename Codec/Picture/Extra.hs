@@ -155,7 +155,7 @@ rotateLeft90 :: Pixel a => Image a -> Image a
 rotateLeft90 img@Image {..} =
   generateImage gen imageHeight imageWidth
   where
-    gen x y = pixelAt img y x
+    gen x y = pixelAt img (imageWidth - 1 - y) x
 {-# INLINEABLE rotateLeft90 #-}
 
 -- | Rotate an image to the right by 90°.
