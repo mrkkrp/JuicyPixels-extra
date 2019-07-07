@@ -11,6 +11,6 @@ Haddocks are pretty self-explanatory, so head straight to them.
 
 ## License
 
-Copyright © 2016–2019 Mark Karpov
+Copyright © 2016–present Mark Karpov
 
 Distributed under BSD 3 clause license.
