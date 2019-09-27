@@ -9,6 +9,13 @@
 Missing primitives you shouldn't need to re-implement yourself. I think the
 Haddocks are pretty self-explanatory, so head straight to them.
 
+## Contribution
+
+Issues, bugs, and questions may be reported in [the GitHub issue tracker for
+this project](https://github.com/mrkkrp/JuicyPixels-extra/issues).
+
+Pull requests are also welcome.
+
 ## License
 
 Copyright © 2016–present Mark Karpov
