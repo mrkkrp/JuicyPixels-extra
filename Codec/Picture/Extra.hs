@@ -1,3 +1,9 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 -- |
 -- Module      :  Codec.Picture.Extra
 -- Copyright   :  © 2016–present Mark Karpov
@@ -8,89 +14,89 @@
 -- Portability :  portable
 --
 -- Utilities for image transformation with JuicyPixels.
-
-{-# LANGUAGE CPP                 #-}
-{-# LANGUAGE FlexibleContexts    #-}
-{-# LANGUAGE RankNTypes          #-}
-{-# LANGUAGE RecordWildCards     #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-
 module Codec.Picture.Extra
   ( -- * Scaling
-    scaleBilinear
+    scaleBilinear,
+
     -- * Cropping
-  , crop
+    crop,
+
     -- * Rotation
-  , flipHorizontally
-  , flipVertically
-  , rotateLeft90
-  , rotateRight90
-  , rotate180
+    flipHorizontally,
+    flipVertically,
+    rotateLeft90,
+    rotateRight90,
+    rotate180,
+
     -- * Other
-  , beside
-  , below )
+    beside,
+    below,
+  )
 where
 
 import Codec.Picture
+import qualified Codec.Picture.Types as M
 import Control.Monad.ST
 import Data.List (foldl1')
-import qualified Codec.Picture.Types as M
 
 -- | Scale an image using bi-linear interpolation.
-
-scaleBilinear
-  :: ( Pixel a
-     , Bounded (PixelBaseComponent a)
-     , Integral (PixelBaseComponent a)
-     )
-  => Int               -- ^ Desired width
-  -> Int               -- ^ Desired height
-  -> Image a           -- ^ Original image
-  -> Image a           -- ^ Scaled image
+scaleBilinear ::
+  ( Pixel a,
+    Bounded (PixelBaseComponent a),
+    Integral (PixelBaseComponent a)
+  ) =>
+  -- | Desired width
+  Int ->
+  -- | Desired height
+  Int ->
+  -- | Original image
+  Image a ->
+  -- | Scaled image
+  Image a
 scaleBilinear width height img@Image {..} = runST $ do
   mimg <- M.newMutableImage width height
   let sx, sy :: Float
-      sx = fromIntegral imageWidth  / fromIntegral width
+      sx = fromIntegral imageWidth / fromIntegral width
       sy = fromIntegral imageHeight / fromIntegral height
       go x' y'
         | x' >= width = go 0 (y' + 1)
         | y' >= height = M.unsafeFreezeImage mimg
         | otherwise = do
-            let xf = fromIntegral x' * sx
-                yf = fromIntegral y' * sy
-                x, y :: Int
-                x  = floor xf
-                y  = floor yf
-                δx = xf - fromIntegral x
-                δy = yf - fromIntegral y
-                pixelAt' i j =
-                  if i >= imageWidth || j >= imageHeight
-                    then toBlack (pixelAt img 0 0)
-                    else pixelAt img i j
-            writePixel mimg x' y' $
-              mulp (pixelAt' x y) ((1 - δx) * (1 - δy)) `addp`
-              mulp (pixelAt' (x + 1) y) (δx * (1 - δy)) `addp`
-              mulp (pixelAt' x (y + 1)) ((1 - δx) * δy) `addp`
-              mulp (pixelAt' (x + 1) (y + 1)) (δx * δy)
-            go (x' + 1) y'
+          let xf = fromIntegral x' * sx
+              yf = fromIntegral y' * sy
+              x , y :: Int
+              x = floor xf
+              y = floor yf
+              δx = xf - fromIntegral x
+              δy = yf - fromIntegral y
+              pixelAt' i j =
+                if i >= imageWidth || j >= imageHeight
+                  then toBlack (pixelAt img 0 0)
+                  else pixelAt img i j
+          writePixel mimg x' y' $
+            mulp (pixelAt' x y) ((1 - δx) * (1 - δy))
+              `addp` mulp (pixelAt' (x + 1) y) (δx * (1 - δy))
+              `addp` mulp (pixelAt' x (y + 1)) ((1 - δx) * δy)
+              `addp` mulp (pixelAt' (x + 1) (y + 1)) (δx * δy)
+          go (x' + 1) y'
   go 0 0
 
 #define scaleBilinear_spec(pixel) \
 {-# SPECIALIZE scaleBilinear :: Int -> Int -> Image pixel -> Image pixel #-}
 
-scaleBilinear_spec(M.PixelRGBA16)
-scaleBilinear_spec(M.PixelRGBA8)
-scaleBilinear_spec(M.PixelCMYK16)
-scaleBilinear_spec(M.PixelCMYK8)
-scaleBilinear_spec(M.PixelYCbCr8)
-scaleBilinear_spec(M.PixelRGB16)
-scaleBilinear_spec(M.PixelYCbCrK8)
-scaleBilinear_spec(M.PixelRGB8)
-scaleBilinear_spec(M.PixelYA16)
-scaleBilinear_spec(M.PixelYA8)
-scaleBilinear_spec(M.Pixel32)
-scaleBilinear_spec(M.Pixel16)
-scaleBilinear_spec(M.Pixel8)
+scaleBilinear_spec (M.PixelRGBA16)
+scaleBilinear_spec (M.PixelRGBA8)
+scaleBilinear_spec (M.PixelCMYK16)
+scaleBilinear_spec (M.PixelCMYK8)
+scaleBilinear_spec (M.PixelYCbCr8)
+scaleBilinear_spec (M.PixelRGB16)
+scaleBilinear_spec (M.PixelYCbCrK8)
+scaleBilinear_spec (M.PixelRGB8)
+scaleBilinear_spec (M.PixelYA16)
+scaleBilinear_spec (M.PixelYA8)
+scaleBilinear_spec (M.Pixel32)
+scaleBilinear_spec (M.Pixel16)
+scaleBilinear_spec (M.Pixel8)
 
 toBlack :: Pixel a => a -> a
 toBlack = colorMap (const 0)
@@ -100,39 +106,49 @@ mulp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> Float -> a
 mulp pixel x = colorMap (floor . (* x) . fromIntegral) pixel
 {-# INLINE mulp #-}
 
-addp
-  :: forall a. ( Pixel a
-               , Bounded (PixelBaseComponent a)
-               , Integral (PixelBaseComponent a)
-               ) => a -> a -> a
+addp ::
+  forall a.
+  ( Pixel a,
+    Bounded (PixelBaseComponent a),
+    Integral (PixelBaseComponent a)
+  ) =>
+  a ->
+  a ->
+  a
 addp = mixWith (const f)
   where
-    f x y = fromIntegral $
-      (maxBound :: PixelBaseComponent a) `min` (fromIntegral x + fromIntegral y)
+    f x y =
+      fromIntegral $
+        (maxBound :: PixelBaseComponent a) `min` (fromIntegral x + fromIntegral y)
 {-# INLINE addp #-}
 
 -- | Crop a given image. If supplied coordinates are greater than size of
 -- original image, image boundaries are used instead.
-
-crop :: Pixel a
-  => Int               -- ^ Index (X axis) of first pixel to include
-  -> Int               -- ^ Index (Y axis) of first pixel to include
-  -> Int               -- ^ Width of resulting image
-  -> Int               -- ^ Height of resulting image
-  -> Image a           -- ^ Original image
-  -> Image a           -- ^ Cropped image
+crop ::
+  Pixel a =>
+  -- | Index (X axis) of first pixel to include
+  Int ->
+  -- | Index (Y axis) of first pixel to include
+  Int ->
+  -- | Width of resulting image
+  Int ->
+  -- | Height of resulting image
+  Int ->
+  -- | Original image
+  Image a ->
+  -- | Cropped image
+  Image a
 crop x' y' w' h' img@Image {..} =
   generateImage gen w h
   where
     gen i j = pixelAt img (x + i) (y + j)
-    x = min (imageWidth  - 1) x'
+    x = min (imageWidth - 1) x'
     y = min (imageHeight - 1) y'
-    w = min (imageWidth  - x) w'
-    h = min (imageHeight  - y) h'
+    w = min (imageWidth - x) w'
+    h = min (imageHeight - y) h'
 {-# INLINEABLE crop #-}
 
 -- | Flip an image horizontally.
-
 flipHorizontally :: Pixel a => Image a -> Image a
 flipHorizontally img@Image {..} =
   generateImage gen imageWidth imageHeight
@@ -141,7 +157,6 @@ flipHorizontally img@Image {..} =
 {-# INLINEABLE flipHorizontally #-}
 
 -- | Flip an image vertically.
-
 flipVertically :: Pixel a => Image a -> Image a
 flipVertically img@Image {..} =
   generateImage gen imageWidth imageHeight
@@ -150,7 +165,6 @@ flipVertically img@Image {..} =
 {-# INLINEABLE flipVertically #-}
 
 -- | Rotate an image to the left by 90°.
-
 rotateLeft90 :: Pixel a => Image a -> Image a
 rotateLeft90 img@Image {..} =
   generateImage gen imageHeight imageWidth
@@ -159,7 +173,6 @@ rotateLeft90 img@Image {..} =
 {-# INLINEABLE rotateLeft90 #-}
 
 -- | Rotate an image to the right by 90°.
-
 rotateRight90 :: Pixel a => Image a -> Image a
 rotateRight90 img@Image {..} =
   generateImage gen imageHeight imageWidth
@@ -170,7 +183,6 @@ rotateRight90 img@Image {..} =
 -- | Rotate an image by 180°, i.e flip both vertically and horizontally.
 --
 -- @since 0.2.0
-
 rotate180 :: Pixel a => Image a -> Image a
 rotate180 img@(Image w h _) = generateImage g w h
   where
@@ -181,7 +193,6 @@ rotate180 img@(Image w h _) = generateImage g w h
 -- are of differnet heights the smallest height is used.
 --
 -- @since 0.2.0
-
 beside :: Pixel a => [Image a] -> Image a
 beside = foldl1' go
   where
@@ -199,7 +210,6 @@ beside = foldl1' go
 -- images are of differnet widths the smallest width is used.
 --
 -- @since 0.2.0
-
 below :: Pixel a => [Image a] -> Image a
 below = foldl1' go
   where
