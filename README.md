@@ -4,7 +4,7 @@
 [![Hackage](https://img.shields.io/hackage/v/JuicyPixels-extra.svg?style=flat)](https://hackage.haskell.org/package/JuicyPixels-extra)
 [![Stackage Nightly](http://stackage.org/package/JuicyPixels-extra/badge/nightly)](http://stackage.org/nightly/package/JuicyPixels-extra)
 [![Stackage LTS](http://stackage.org/package/JuicyPixels-extra/badge/lts)](http://stackage.org/lts/package/JuicyPixels-extra)
-[![Build Status](https://travis-ci.org/mrkkrp/JuicyPixels-extra.svg?branch=master)](https://travis-ci.org/mrkkrp/JuicyPixels-extra)
+![CI](https://github.com/mrkkrp/JuicyPixels-extra/workflows/CI/badge.svg?branch=master)
 
 Missing primitives you shouldn't need to re-implement yourself. I think the
 Haddocks are pretty self-explanatory, so head straight to them.
