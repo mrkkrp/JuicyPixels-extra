@@ -64,7 +64,7 @@ scaleBilinear width height img@Image {..} = runST $ do
         | otherwise = do
           let xf = fromIntegral x' * sx
               yf = fromIntegral y' * sy
-              x , y :: Int
+              x, y :: Int
               x = floor xf
               y = floor yf
               δx = xf - fromIntegral x

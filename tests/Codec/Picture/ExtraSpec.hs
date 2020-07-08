@@ -27,102 +27,102 @@ spec = do
 
 scaleBilinearSpec :: Spec
 scaleBilinearSpec = do
-  context "when called with orginial dimensions"
-    $ it "produces the same image"
-    $ checkWithFiles
-      (scaleBilinear 512 512)
-      "data-examples/lenna.png"
-      "data-examples/lenna.png"
-  context "when we scale down"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (scaleBilinear 100 100)
-      "data-examples/lenna.png"
-      "data-examples/lenna-scaled-down.png"
-  context "when we scale up"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (scaleBilinear 600 600)
-      "data-examples/lenna.png"
-      "data-examples/lenna-scaled-up.png"
+  context "when called with orginial dimensions" $
+    it "produces the same image" $
+      checkWithFiles
+        (scaleBilinear 512 512)
+        "data-examples/lenna.png"
+        "data-examples/lenna.png"
+  context "when we scale down" $
+    it "produces correct image" $
+      checkWithFiles
+        (scaleBilinear 100 100)
+        "data-examples/lenna.png"
+        "data-examples/lenna-scaled-down.png"
+  context "when we scale up" $
+    it "produces correct image" $
+      checkWithFiles
+        (scaleBilinear 600 600)
+        "data-examples/lenna.png"
+        "data-examples/lenna-scaled-up.png"
 
 cropSpec :: Spec
 cropSpec = do
-  context "when we pass arguments within image size (square)"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (crop 211 210 178 191)
-      "data-examples/lenna.png"
-      "data-examples/lenna-cropped.png"
-  context "when we pass arguments within image size (vertical)"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (crop 0 512 512 512)
-      "data-examples/lenna-below.png"
-      "data-examples/lenna.png"
+  context "when we pass arguments within image size (square)" $
+    it "produces correct image" $
+      checkWithFiles
+        (crop 211 210 178 191)
+        "data-examples/lenna.png"
+        "data-examples/lenna-cropped.png"
+  context "when we pass arguments within image size (vertical)" $
+    it "produces correct image" $
+      checkWithFiles
+        (crop 0 512 512 512)
+        "data-examples/lenna-below.png"
+        "data-examples/lenna.png"
 
 flipHorizontallySpec :: Spec
 flipHorizontallySpec =
-  context "when we flip horizontally"
-    $ it "produces correct image"
-    $ checkWithFiles
-      flipHorizontally
-      "data-examples/lenna.png"
-      "data-examples/lenna-horizontal-flip.png"
+  context "when we flip horizontally" $
+    it "produces correct image" $
+      checkWithFiles
+        flipHorizontally
+        "data-examples/lenna.png"
+        "data-examples/lenna-horizontal-flip.png"
 
 flipVerticallySpec :: Spec
 flipVerticallySpec =
-  context "when we flip vertically"
-    $ it "produces correct image"
-    $ checkWithFiles
-      flipVertically
-      "data-examples/lenna.png"
-      "data-examples/lenna-vertical-flip.png"
+  context "when we flip vertically" $
+    it "produces correct image" $
+      checkWithFiles
+        flipVertically
+        "data-examples/lenna.png"
+        "data-examples/lenna-vertical-flip.png"
 
 rotateLeft90Spec :: Spec
 rotateLeft90Spec =
-  context "when we rotate to the left by 90°"
-    $ it "produces correct image"
-    $ checkWithFiles
-      rotateLeft90
-      "data-examples/lenna.png"
-      "data-examples/lenna-left-rotated.png"
+  context "when we rotate to the left by 90°" $
+    it "produces correct image" $
+      checkWithFiles
+        rotateLeft90
+        "data-examples/lenna.png"
+        "data-examples/lenna-left-rotated.png"
 
 rotateRight90Spec :: Spec
 rotateRight90Spec =
-  context "when we rotate to the right by 90°"
-    $ it "produces correct image"
-    $ checkWithFiles
-      rotateRight90
-      "data-examples/lenna.png"
-      "data-examples/lenna-right-rotated.png"
+  context "when we rotate to the right by 90°" $
+    it "produces correct image" $
+      checkWithFiles
+        rotateRight90
+        "data-examples/lenna.png"
+        "data-examples/lenna-right-rotated.png"
 
 rotate180Spec :: Spec
 rotate180Spec =
-  context "when we rotate by 180°"
-    $ it "produces correct image"
-    $ checkWithFiles
-      rotate180
-      "data-examples/lenna.png"
-      "data-examples/lenna-180-rotated.png"
+  context "when we rotate by 180°" $
+    it "produces correct image" $
+      checkWithFiles
+        rotate180
+        "data-examples/lenna.png"
+        "data-examples/lenna-180-rotated.png"
 
 besideSpec :: Spec
 besideSpec =
-  context "when we place images beside each other"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (\x -> beside [x, x])
-      "data-examples/lenna.png"
-      "data-examples/lenna-beside.png"
+  context "when we place images beside each other" $
+    it "produces correct image" $
+      checkWithFiles
+        (\x -> beside [x, x])
+        "data-examples/lenna.png"
+        "data-examples/lenna-beside.png"
 
 belowSpec :: Spec
 belowSpec =
-  context "when we place images below each other"
-    $ it "produces correct image"
-    $ checkWithFiles
-      (\x -> below [x, x])
-      "data-examples/lenna.png"
-      "data-examples/lenna-below.png"
+  context "when we place images below each other" $
+    it "produces correct image" $
+      checkWithFiles
+        (\x -> below [x, x])
+        "data-examples/lenna.png"
+        "data-examples/lenna-below.png"
 
 -- | Run given transforming function on image loaded from one file and
 -- compare resulting image with contents of another file.
