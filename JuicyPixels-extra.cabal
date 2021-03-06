@@ -54,7 +54,7 @@ test-suite tests
     build-depends:
         base >=4.13 && <5,
         JuicyPixels >=3.2.6.4 && <3.4,
-        JuicyPixels-extra -any,
+        JuicyPixels-extra,
         hspec >=2.0
 
     if flag(dev)
@@ -71,7 +71,7 @@ benchmark bench
     build-depends:
         base >=4.13 && <5,
         JuicyPixels >=3.2.6.4 && <3.4,
-        JuicyPixels-extra -any,
+        JuicyPixels-extra,
         criterion >=0.6.2.1 && <1.6
 
     if flag(dev)
