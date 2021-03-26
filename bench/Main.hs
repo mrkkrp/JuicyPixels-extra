@@ -58,14 +58,14 @@ main =
     beside' img = beside [img, img]
     below' img = below [img, img]
 
--- | Run a benchmark given function to benchmark and where to get image to
--- pass as an input.
+-- | Run a benchmark given a function to benchmark and where to get image to
+-- pass as the input.
 baction ::
   -- | Name of the benchmark
   String ->
-  -- | Transformation to perform
+  -- | The transformation to perform
   (Image PixelRGB8 -> Image PixelRGB8) ->
-  -- | Where to get image to start with
+  -- | Where to get the image to start with
   FilePath ->
   Benchmark
 baction name f path = env getImg (bench name . nf f)

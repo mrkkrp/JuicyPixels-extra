@@ -6,8 +6,7 @@
 [![Stackage LTS](http://stackage.org/package/JuicyPixels-extra/badge/lts)](http://stackage.org/lts/package/JuicyPixels-extra)
 ![CI](https://github.com/mrkkrp/JuicyPixels-extra/workflows/CI/badge.svg?branch=master)
 
-Missing primitives you shouldn't need to re-implement yourself. I think the
-Haddocks are pretty self-explanatory, so head straight to them.
+A collection of functions to scale, crop, flip images with JuicyPixels.
 
 ## Contribution
 

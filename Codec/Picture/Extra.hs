@@ -13,7 +13,7 @@
 -- Stability   :  experimental
 -- Portability :  portable
 --
--- Utilities for image transformation with JuicyPixels.
+-- A collection of functions to scale, crop, flip images with JuicyPixels.
 module Codec.Picture.Extra
   ( -- * Scaling
     scaleBilinear,
@@ -122,8 +122,8 @@ addp = mixWith (const f)
         (maxBound :: PixelBaseComponent a) `min` (fromIntegral x + fromIntegral y)
 {-# INLINE addp #-}
 
--- | Crop a given image. If supplied coordinates are greater than size of
--- original image, image boundaries are used instead.
+-- | Crop an image. If the supplied coordinates are greater than the size of
+-- the image, the image boundaries are used instead.
 crop ::
   Pixel a =>
   -- | Index (X axis) of first pixel to include

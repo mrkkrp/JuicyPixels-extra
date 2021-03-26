@@ -124,14 +124,14 @@ belowSpec =
         "data-examples/lenna.png"
         "data-examples/lenna-below.png"
 
--- | Run given transforming function on image loaded from one file and
--- compare resulting image with contents of another file.
+-- | Run a transforming on the image loaded from a file and compare the
+-- resulting image with the contents of another file.
 checkWithFiles ::
   -- | Transformation to test
   (Image PixelRGB8 -> Image PixelRGB8) ->
   -- | Where to get the original image
   FilePath ->
-  -- | Where to get image to compare with
+  -- | Where to get the image to compare with
   FilePath ->
   Expectation
 checkWithFiles f opath fpath = do
@@ -139,13 +139,13 @@ checkWithFiles f opath fpath = do
   (Right (ImageRGB8 result)) <- readImage fpath
   f original `blindlySatisfy` sameImage result
 
--- | The same as 'shouldSatisfy', but doesn't care if its argument is
+-- | The same as 'shouldSatisfy', but doesn't care if its argument is an
 -- instance of 'Show' or not.
 blindlySatisfy :: a -> (a -> Bool) -> Expectation
 v `blindlySatisfy` p =
   unless (p v) (expectationFailure "predicate failed")
 
--- | Equality test for images.
+-- | The equality test for images.
 sameImage :: Image PixelRGB8 -> Image PixelRGB8 -> Bool
 sameImage a b =
   ((==) `on` imageWidth) a b
