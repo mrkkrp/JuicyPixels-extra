@@ -1,4 +1,8 @@
-## Unreleased
+## Juicy Pixels Extra 0.5.0
+
+* Changed how edge pixels are calculated when scaling via bilinear
+  interpolation is used. [See PR
+  21](https://github.com/mrkkrp/JuicyPixels-extra/pull/21).
 
 * Dropped support for GHC 8.2 and older.
 
