@@ -70,9 +70,7 @@ scaleBilinear width height img@Image {..} = runST $ do
               δx = xf - fromIntegral x
               δy = yf - fromIntegral y
               pixelAt' i j =
-                if i >= imageWidth || j >= imageHeight
-                  then toBlack (pixelAt img 0 0)
-                  else pixelAt img i j
+                pixelAt img (min (pred imageWidth) i) (min (pred imageHeight) j)
           writePixel mimg x' y' $
             mulp (pixelAt' x y) ((1 - δx) * (1 - δy))
               `addp` mulp (pixelAt' (x + 1) y) (δx * (1 - δy))
@@ -97,10 +95,6 @@ scaleBilinear_spec (M.PixelYA8)
 scaleBilinear_spec (M.Pixel32)
 scaleBilinear_spec (M.Pixel16)
 scaleBilinear_spec (M.Pixel8)
-
-toBlack :: Pixel a => a -> a
-toBlack = colorMap (const 0)
-{-# INLINE toBlack #-}
 
 mulp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> Float -> a
 mulp pixel x = colorMap (floor . (* x) . fromIntegral) pixel
