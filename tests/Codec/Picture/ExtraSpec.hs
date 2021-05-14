@@ -31,20 +31,20 @@ scaleBilinearSpec = do
     it "produces the same image" $
       checkWithFiles
         (scaleBilinear 512 512)
-        "data-examples/lenna.png"
-        "data-examples/lenna.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque.png"
   context "when we scale down" $
     it "produces correct image" $
       checkWithFiles
         (scaleBilinear 100 100)
-        "data-examples/lenna.png"
-        "data-examples/lenna-scaled-down.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-scaled-down.png"
   context "when we scale up" $
     it "produces correct image" $
       checkWithFiles
         (scaleBilinear 600 600)
-        "data-examples/lenna.png"
-        "data-examples/lenna-scaled-up.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-scaled-up.png"
 
 cropSpec :: Spec
 cropSpec = do
@@ -52,14 +52,14 @@ cropSpec = do
     it "produces correct image" $
       checkWithFiles
         (crop 211 210 178 191)
-        "data-examples/lenna.png"
-        "data-examples/lenna-cropped.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-cropped.png"
   context "when we pass arguments within image size (vertical)" $
     it "produces correct image" $
       checkWithFiles
         (crop 0 512 512 512)
-        "data-examples/lenna-below.png"
-        "data-examples/lenna.png"
+        "data-examples/macaque-below.png"
+        "data-examples/macaque.png"
 
 flipHorizontallySpec :: Spec
 flipHorizontallySpec =
@@ -67,8 +67,8 @@ flipHorizontallySpec =
     it "produces correct image" $
       checkWithFiles
         flipHorizontally
-        "data-examples/lenna.png"
-        "data-examples/lenna-horizontal-flip.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-horizontal-flip.png"
 
 flipVerticallySpec :: Spec
 flipVerticallySpec =
@@ -76,8 +76,8 @@ flipVerticallySpec =
     it "produces correct image" $
       checkWithFiles
         flipVertically
-        "data-examples/lenna.png"
-        "data-examples/lenna-vertical-flip.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-vertical-flip.png"
 
 rotateLeft90Spec :: Spec
 rotateLeft90Spec =
@@ -85,8 +85,8 @@ rotateLeft90Spec =
     it "produces correct image" $
       checkWithFiles
         rotateLeft90
-        "data-examples/lenna.png"
-        "data-examples/lenna-left-rotated.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-left-rotated.png"
 
 rotateRight90Spec :: Spec
 rotateRight90Spec =
@@ -94,8 +94,8 @@ rotateRight90Spec =
     it "produces correct image" $
       checkWithFiles
         rotateRight90
-        "data-examples/lenna.png"
-        "data-examples/lenna-right-rotated.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-right-rotated.png"
 
 rotate180Spec :: Spec
 rotate180Spec =
@@ -103,8 +103,8 @@ rotate180Spec =
     it "produces correct image" $
       checkWithFiles
         rotate180
-        "data-examples/lenna.png"
-        "data-examples/lenna-180-rotated.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-180-rotated.png"
 
 besideSpec :: Spec
 besideSpec =
@@ -112,8 +112,8 @@ besideSpec =
     it "produces correct image" $
       checkWithFiles
         (\x -> beside [x, x])
-        "data-examples/lenna.png"
-        "data-examples/lenna-beside.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-beside.png"
 
 belowSpec :: Spec
 belowSpec =
@@ -121,8 +121,8 @@ belowSpec =
     it "produces correct image" $
       checkWithFiles
         (\x -> below [x, x])
-        "data-examples/lenna.png"
-        "data-examples/lenna-below.png"
+        "data-examples/macaque.png"
+        "data-examples/macaque-below.png"
 
 -- | Run a transforming on the image loaded from a file and compare the
 -- resulting image with the contents of another file.
