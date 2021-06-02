@@ -45,6 +45,24 @@ scaleBilinearSpec = do
         (scaleBilinear 600 600)
         "data-examples/macaque.png"
         "data-examples/macaque-scaled-up.png"
+  context "when we scale to 1 width" $
+    it "produces correct image" $
+      checkWithFiles
+        (scaleBilinear 1 512)
+        "data-examples/macaque.png"
+        "data-examples/macaque-width-1.png"
+  context "when we scale to 1 height" $
+    it "produces correct image" $
+      checkWithFiles
+        (scaleBilinear 512 1)
+        "data-examples/macaque.png"
+        "data-examples/macaque-height-1.png"
+  context "when we scale to 0x0" $
+    it "produces the empty image" $
+      checkWithFiles
+        (scaleBilinear 0 0)
+        "data-examples/macaque.png"
+        "data-examples/empty.png"
 
 cropSpec :: Spec
 cropSpec = do

@@ -1,3 +1,8 @@
+## Juicy Pixels Extra 0.5.1
+
+* `scaleBilinear` no longer hangs when the target width or height is 0.
+  [Issue 24](https://github.com/mrkkrp/JuicyPixels-extra/issues/24).
+
 ## Juicy Pixels Extra 0.5.0
 
 * Changed how edge pixels are calculated when scaling via bilinear
