@@ -1,3 +1,8 @@
+## Juicy Pixels Extra 0.5.2
+
+* Replacing CPP preprocessing rules with expicit SPECIALIZE pragmas. [See PR
+  26](https://github.com/mrkkrp/JuicyPixels-extra/pull/26).
+
 ## Juicy Pixels Extra 0.5.1
 
 * `scaleBilinear` no longer hangs when the target width or height is 0.
