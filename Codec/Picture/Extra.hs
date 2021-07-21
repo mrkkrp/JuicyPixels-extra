@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -81,23 +80,19 @@ scaleBilinear width height img@Image {..}
                 `addp` mulp (pixelAt' (x + 1) (y + 1)) (δx * δy)
             go (x' + 1) y'
     go 0 0
-
-#define scaleBilinear_spec(pixel) \
-{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image pixel -> Image pixel #-}
-
-scaleBilinear_spec (M.PixelRGBA16)
-scaleBilinear_spec (M.PixelRGBA8)
-scaleBilinear_spec (M.PixelCMYK16)
-scaleBilinear_spec (M.PixelCMYK8)
-scaleBilinear_spec (M.PixelYCbCr8)
-scaleBilinear_spec (M.PixelRGB16)
-scaleBilinear_spec (M.PixelYCbCrK8)
-scaleBilinear_spec (M.PixelRGB8)
-scaleBilinear_spec (M.PixelYA16)
-scaleBilinear_spec (M.PixelYA8)
-scaleBilinear_spec (M.Pixel32)
-scaleBilinear_spec (M.Pixel16)
-scaleBilinear_spec (M.Pixel8)
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGBA16 -> Image M.PixelRGBA16 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGBA8 -> Image M.PixelRGBA8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelCMYK16 -> Image M.PixelCMYK16 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelCMYK8 -> Image M.PixelCMYK8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelYCbCr8 -> Image M.PixelYCbCr8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGB16 -> Image M.PixelRGB16 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelYCbCrK8 -> Image M.PixelYCbCrK8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGB8 -> Image M.PixelRGB8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelYA16 -> Image M.PixelYA16 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelYA8 -> Image M.PixelYA8 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.Pixel32 -> Image M.Pixel32 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.Pixel16 -> Image M.Pixel16 #-}
+{-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.Pixel8 -> Image M.Pixel8 #-}
 
 mulp :: (Pixel a, Integral (PixelBaseComponent a)) => a -> Float -> a
 mulp pixel x = colorMap (floor . (* x) . fromIntegral) pixel
