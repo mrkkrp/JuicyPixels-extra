@@ -54,32 +54,32 @@ scaleBilinear ::
   Image a
 scaleBilinear width height img@Image {..}
   | width <= 0 || height <= 0 =
-    generateImage (error "scaleBilinear: absurd") (max 0 width) (max 0 height)
+      generateImage (error "scaleBilinear: absurd") (max 0 width) (max 0 height)
   | otherwise = runST $ do
-    mimg <- M.newMutableImage width height
-    let sx, sy :: Float
-        sx = fromIntegral imageWidth / fromIntegral width
-        sy = fromIntegral imageHeight / fromIntegral height
-        go x' y'
-          | x' >= width = go 0 (y' + 1)
-          | y' >= height = M.unsafeFreezeImage mimg
-          | otherwise = do
-            let xf = fromIntegral x' * sx
-                yf = fromIntegral y' * sy
-                x, y :: Int
-                x = floor xf
-                y = floor yf
-                δx = xf - fromIntegral x
-                δy = yf - fromIntegral y
-                pixelAt' i j =
-                  pixelAt img (min (pred imageWidth) i) (min (pred imageHeight) j)
-            writePixel mimg x' y' $
-              mulp (pixelAt' x y) ((1 - δx) * (1 - δy))
-                `addp` mulp (pixelAt' (x + 1) y) (δx * (1 - δy))
-                `addp` mulp (pixelAt' x (y + 1)) ((1 - δx) * δy)
-                `addp` mulp (pixelAt' (x + 1) (y + 1)) (δx * δy)
-            go (x' + 1) y'
-    go 0 0
+      mimg <- M.newMutableImage width height
+      let sx, sy :: Float
+          sx = fromIntegral imageWidth / fromIntegral width
+          sy = fromIntegral imageHeight / fromIntegral height
+          go x' y'
+            | x' >= width = go 0 (y' + 1)
+            | y' >= height = M.unsafeFreezeImage mimg
+            | otherwise = do
+                let xf = fromIntegral x' * sx
+                    yf = fromIntegral y' * sy
+                    x, y :: Int
+                    x = floor xf
+                    y = floor yf
+                    δx = xf - fromIntegral x
+                    δy = yf - fromIntegral y
+                    pixelAt' i j =
+                      pixelAt img (min (pred imageWidth) i) (min (pred imageHeight) j)
+                writePixel mimg x' y' $
+                  mulp (pixelAt' x y) ((1 - δx) * (1 - δy))
+                    `addp` mulp (pixelAt' (x + 1) y) (δx * (1 - δy))
+                    `addp` mulp (pixelAt' x (y + 1)) ((1 - δx) * δy)
+                    `addp` mulp (pixelAt' (x + 1) (y + 1)) (δx * δy)
+                go (x' + 1) y'
+      go 0 0
 {-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGBA16 -> Image M.PixelRGBA16 #-}
 {-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelRGBA8 -> Image M.PixelRGBA8 #-}
 {-# SPECIALIZE scaleBilinear :: Int -> Int -> Image M.PixelCMYK16 -> Image M.PixelCMYK16 #-}
