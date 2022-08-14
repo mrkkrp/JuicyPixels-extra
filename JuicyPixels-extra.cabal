@@ -72,7 +72,7 @@ benchmark bench
         base >=4.13 && <5,
         JuicyPixels >=3.2.6.4 && <3.4,
         JuicyPixels-extra,
-        criterion >=0.6.2.1 && <1.6
+        criterion >=0.6.2.1 && <1.7
 
     if flag(dev)
         ghc-options: -O2 -Wall -Werror
