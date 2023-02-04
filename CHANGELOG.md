@@ -1,3 +1,8 @@
+## Juicy Pixels Extra 0.6.0
+
+* Added new functions `trim` and `square`. [See PR
+  34](https://github.com/mrkkrp/JuicyPixels-extra/pull/34).
+
 ## Juicy Pixels Extra 0.5.2
 
 * Replacing CPP preprocessing rules with expicit SPECIALIZE pragmas. [See PR

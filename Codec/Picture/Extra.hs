@@ -19,6 +19,7 @@ module Codec.Picture.Extra
 
     -- * Cropping
     crop,
+    trim,
 
     -- * Rotation
     flipHorizontally,
@@ -30,13 +31,15 @@ module Codec.Picture.Extra
     -- * Other
     beside,
     below,
+    square,
   )
 where
 
 import Codec.Picture
 import qualified Codec.Picture.Types as M
 import Control.Monad.ST
-import Data.List (foldl1')
+import Data.List (find, foldl1')
+import Data.Maybe (fromMaybe)
 
 -- | Scale an image using bi-linear interpolation.
 scaleBilinear ::
@@ -140,6 +143,25 @@ crop x' y' w' h' img@Image {..} =
     h = min (imageHeight - y) h'
 {-# INLINEABLE crop #-}
 
+-- | Trim the completely transparent edges of an image.
+--
+-- @since 0.6.0
+trim :: (Pixel a, Eq (PixelBaseComponent a)) => Image a -> Image a
+trim img@Image {..} = crop left top width height img
+  where
+    isInvisible p = pixelOpacity p == 0
+    isInvisibleRow y = all isInvisible $ flip (pixelAt img) y <$> [0 .. imageWidth - 1]
+    isInvisibleCol x = all isInvisible $ pixelAt img x <$> [0 .. imageHeight - 1]
+
+    top = fromMaybe 0 (find (not . isInvisibleRow) [0 .. imageHeight - 1])
+    bottom = fromMaybe 0 (find (not . isInvisibleRow) [imageHeight - 1, imageHeight - 2 .. 0]) + 1
+    height = bottom - top
+
+    left = fromMaybe 0 (find (not . isInvisibleCol) [0 .. imageWidth - 1])
+    right = fromMaybe 0 (find (not . isInvisibleCol) [imageWidth - 1, imageWidth - 2 .. 1]) + 1
+    width = right - left
+{-# INLINEABLE trim #-}
+
 -- | Flip an image horizontally.
 flipHorizontally :: Pixel a => Image a -> Image a
 flipHorizontally img@Image {..} =
@@ -214,3 +236,24 @@ below = foldl1' go
           | otherwise = pixelAt img2 x (y - h1)
         w = min w1 w2
 {-# INLINEABLE below #-}
+
+-- | Make an image a perfect square by adding filler around it.
+--
+-- @since 0.6.0
+square :: Pixel a => a -> Image a -> Image a
+square filler img@Image {..} =
+  if imageWidth == imageHeight
+    then img
+    else generateImage gen size size
+  where
+    size = max imageWidth imageHeight
+    extraWidth = size - imageWidth
+    extraHeight = size - imageHeight
+    offsetX = extraWidth `div` 2
+    offsetY = extraHeight `div` 2
+    gen i _ | i < offsetX = filler
+    gen i _ | i >= imageWidth + offsetX = filler
+    gen _ j | j < offsetY = filler
+    gen _ j | j >= imageHeight + offsetY = filler
+    gen i j = pixelAt img (i - offsetX) (j - offsetY)
+{-# INLINEABLE square #-}
