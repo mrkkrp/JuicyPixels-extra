@@ -1,6 +1,6 @@
 cabal-version:   2.4
 name:            JuicyPixels-extra
-version:         0.5.2
+version:         0.6.0
 license:         BSD-3-Clause
 license-file:    LICENSE.md
 maintainer:      Mark Karpov <markkarpov92@gmail.com>
