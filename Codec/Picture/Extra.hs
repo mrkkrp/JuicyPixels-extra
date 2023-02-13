@@ -120,7 +120,7 @@ addp = mixWith (const f)
 -- | Crop an image. If the supplied coordinates are greater than the size of
 -- the image, the image boundaries are used instead.
 crop ::
-  Pixel a =>
+  (Pixel a) =>
   -- | Index (X axis) of first pixel to include
   Int ->
   -- | Index (Y axis) of first pixel to include
@@ -163,7 +163,7 @@ trim img@Image {..} = crop left top width height img
 {-# INLINEABLE trim #-}
 
 -- | Flip an image horizontally.
-flipHorizontally :: Pixel a => Image a -> Image a
+flipHorizontally :: (Pixel a) => Image a -> Image a
 flipHorizontally img@Image {..} =
   generateImage gen imageWidth imageHeight
   where
@@ -171,7 +171,7 @@ flipHorizontally img@Image {..} =
 {-# INLINEABLE flipHorizontally #-}
 
 -- | Flip an image vertically.
-flipVertically :: Pixel a => Image a -> Image a
+flipVertically :: (Pixel a) => Image a -> Image a
 flipVertically img@Image {..} =
   generateImage gen imageWidth imageHeight
   where
@@ -179,7 +179,7 @@ flipVertically img@Image {..} =
 {-# INLINEABLE flipVertically #-}
 
 -- | Rotate an image to the left by 90°.
-rotateLeft90 :: Pixel a => Image a -> Image a
+rotateLeft90 :: (Pixel a) => Image a -> Image a
 rotateLeft90 img@Image {..} =
   generateImage gen imageHeight imageWidth
   where
@@ -187,7 +187,7 @@ rotateLeft90 img@Image {..} =
 {-# INLINEABLE rotateLeft90 #-}
 
 -- | Rotate an image to the right by 90°.
-rotateRight90 :: Pixel a => Image a -> Image a
+rotateRight90 :: (Pixel a) => Image a -> Image a
 rotateRight90 img@Image {..} =
   generateImage gen imageHeight imageWidth
   where
@@ -197,7 +197,7 @@ rotateRight90 img@Image {..} =
 -- | Rotate an image by 180°, i.e flip both vertically and horizontally.
 --
 -- @since 0.2.0
-rotate180 :: Pixel a => Image a -> Image a
+rotate180 :: (Pixel a) => Image a -> Image a
 rotate180 img@(Image w h _) = generateImage g w h
   where
     g x y = pixelAt img (w - 1 - x) (h - 1 - y)
@@ -207,10 +207,10 @@ rotate180 img@(Image w h _) = generateImage g w h
 -- are of differnet heights the smallest height is used.
 --
 -- @since 0.2.0
-beside :: Pixel a => [Image a] -> Image a
+beside :: (Pixel a) => [Image a] -> Image a
 beside = foldl1' go
   where
-    go :: Pixel a => Image a -> Image a -> Image a
+    go :: (Pixel a) => Image a -> Image a -> Image a
     go img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
       generateImage g (w1 + w2) h
       where
@@ -224,10 +224,10 @@ beside = foldl1' go
 -- images are of differnet widths the smallest width is used.
 --
 -- @since 0.2.0
-below :: Pixel a => [Image a] -> Image a
+below :: (Pixel a) => [Image a] -> Image a
 below = foldl1' go
   where
-    go :: Pixel a => Image a -> Image a -> Image a
+    go :: (Pixel a) => Image a -> Image a -> Image a
     go img1@(Image w1 h1 _) img2@(Image w2 h2 _) =
       generateImage g w (h1 + h2)
       where
@@ -240,7 +240,7 @@ below = foldl1' go
 -- | Make an image a perfect square by adding filler around it.
 --
 -- @since 0.6.0
-square :: Pixel a => a -> Image a -> Image a
+square :: (Pixel a) => a -> Image a -> Image a
 square filler img@Image {..} =
   if imageWidth == imageHeight
     then img
