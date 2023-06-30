@@ -234,7 +234,11 @@ v `blindlySatisfy` p =
   unless (p v) (expectationFailure "predicate failed")
 
 -- | The equality test for images.
-sameImage :: (Eq a, Eq (PixelBaseComponent a), Storable (PixelBaseComponent a)) => Image a -> Image a -> Bool
+sameImage ::
+  (Eq (PixelBaseComponent a), Storable (PixelBaseComponent a)) =>
+  Image a ->
+  Image a ->
+  Bool
 sameImage a b =
   ((==) `on` imageWidth) a b
     && ((==) `on` imageHeight) a b
