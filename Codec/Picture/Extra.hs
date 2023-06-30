@@ -36,7 +36,7 @@ module Codec.Picture.Extra
 where
 
 import Codec.Picture
-import qualified Codec.Picture.Types as M
+import Codec.Picture.Types qualified as M
 import Control.Monad.ST
 import Data.List (find, foldl1')
 import Data.Maybe (fromMaybe)
