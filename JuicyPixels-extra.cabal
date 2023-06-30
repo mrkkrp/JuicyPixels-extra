@@ -28,7 +28,7 @@ flag dev
 
 library
     exposed-modules:  Codec.Picture.Extra
-    default-language: Haskell2010
+    default-language: GHC2021
     build-depends:
         base >=4.15 && <5,
         JuicyPixels >=3.2.6.4 && <3.4
@@ -50,7 +50,7 @@ test-suite tests
     build-tool-depends: hspec-discover:hspec-discover >=2.0 && <3.0
     hs-source-dirs:     tests
     other-modules:      Codec.Picture.ExtraSpec
-    default-language:   Haskell2010
+    default-language:   GHC2021
     build-depends:
         base >=4.15 && <5,
         JuicyPixels >=3.2.6.4 && <3.4,
@@ -67,7 +67,7 @@ benchmark bench
     type:             exitcode-stdio-1.0
     main-is:          Main.hs
     hs-source-dirs:   bench
-    default-language: Haskell2010
+    default-language: GHC2021
     build-depends:
         base >=4.15 && <5,
         JuicyPixels >=3.2.6.4 && <3.4,
