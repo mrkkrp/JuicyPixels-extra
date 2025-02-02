@@ -4,7 +4,7 @@
 [![Hackage](https://img.shields.io/hackage/v/JuicyPixels-extra.svg?style=flat)](https://hackage.haskell.org/package/JuicyPixels-extra)
 [![Stackage Nightly](http://stackage.org/package/JuicyPixels-extra/badge/nightly)](http://stackage.org/nightly/package/JuicyPixels-extra)
 [![Stackage LTS](http://stackage.org/package/JuicyPixels-extra/badge/lts)](http://stackage.org/lts/package/JuicyPixels-extra)
-![CI](https://github.com/mrkkrp/JuicyPixels-extra/workflows/CI/badge.svg?branch=master)
+[![CI](https://github.com/mrkkrp/JuicyPixels-extra/actions/workflows/ci.yaml/badge.svg)](https://github.com/mrkkrp/JuicyPixels-extra/actions/workflows/ci.yaml)
 
 A collection of functions to scale, crop, flip images with JuicyPixels.
 
