@@ -6,7 +6,7 @@
 [![Stackage LTS](http://stackage.org/package/JuicyPixels-extra/badge/lts)](http://stackage.org/lts/package/JuicyPixels-extra)
 [![CI](https://github.com/mrkkrp/JuicyPixels-extra/actions/workflows/ci.yaml/badge.svg)](https://github.com/mrkkrp/JuicyPixels-extra/actions/workflows/ci.yaml)
 
-A collection of functions to scale, crop, flip images with JuicyPixels.
+A collection of functions to scale, crop, and flip images with JuicyPixels.
 
 ## Contribution
 
@@ -19,4 +19,4 @@ Pull requests are also welcome.
 
 Copyright © 2016–present Mark Karpov
 
-Distributed under BSD 3 clause license.
+Distributed under the BSD 3-clause license.

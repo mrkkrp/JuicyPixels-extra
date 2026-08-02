@@ -12,7 +12,8 @@
 -- Stability   :  experimental
 -- Portability :  portable
 --
--- A collection of functions to scale, crop, flip images with JuicyPixels.
+-- A collection of functions to scale, crop, and flip images with
+-- JuicyPixels.
 module Codec.Picture.Extra
   ( -- * Scaling
     scaleBilinear,
@@ -194,7 +195,7 @@ rotateRight90 img@Image {..} =
     gen x y = pixelAt img y (imageHeight - 1 - x)
 {-# INLINEABLE rotateRight90 #-}
 
--- | Rotate an image by 180°, i.e flip both vertically and horizontally.
+-- | Rotate an image by 180°, i.e. flip both vertically and horizontally.
 --
 -- @since 0.2.0
 rotate180 :: (Pixel a) => Image a -> Image a
@@ -204,7 +205,7 @@ rotate180 img@(Image w h _) = generateImage g w h
 {-# INLINEABLE rotate180 #-}
 
 -- | Create an image by placing several images side by side. If the images
--- are of differnet heights the smallest height is used.
+-- are of different heights, the smallest height is used.
 --
 -- @since 0.2.0
 beside :: (Pixel a) => [Image a] -> Image a
@@ -221,7 +222,7 @@ beside = foldl1' go
 {-# INLINEABLE beside #-}
 
 -- | Create an image by placing several images in a vertical stack. If the
--- images are of differnet widths the smallest width is used.
+-- images are of different widths, the smallest width is used.
 --
 -- @since 0.2.0
 below :: (Pixel a) => [Image a] -> Image a
