@@ -56,7 +56,7 @@ scaleBilinear ::
   Image a ->
   -- | Scaled image
   Image a
-scaleBilinear width height img@Image {..}
+scaleBilinear width height img@Image{..}
   | width <= 0 || height <= 0 =
       generateImage (error "scaleBilinear: absurd") (max 0 width) (max 0 height)
   | otherwise = runST $ do
@@ -134,7 +134,7 @@ crop ::
   Image a ->
   -- | Cropped image
   Image a
-crop x' y' w' h' img@Image {..} =
+crop x' y' w' h' img@Image{..} =
   generateImage gen w h
   where
     gen i j = pixelAt img (x + i) (y + j)
@@ -148,7 +148,7 @@ crop x' y' w' h' img@Image {..} =
 --
 -- @since 0.6.0
 trim :: (Pixel a, Eq (PixelBaseComponent a)) => Image a -> Image a
-trim img@Image {..} = crop left top width height img
+trim img@Image{..} = crop left top width height img
   where
     isInvisible p = pixelOpacity p == 0
     isInvisibleRow y = all isInvisible $ flip (pixelAt img) y <$> [0 .. imageWidth - 1]
@@ -165,7 +165,7 @@ trim img@Image {..} = crop left top width height img
 
 -- | Flip an image horizontally.
 flipHorizontally :: (Pixel a) => Image a -> Image a
-flipHorizontally img@Image {..} =
+flipHorizontally img@Image{..} =
   generateImage gen imageWidth imageHeight
   where
     gen x = pixelAt img (imageWidth - 1 - x)
@@ -173,7 +173,7 @@ flipHorizontally img@Image {..} =
 
 -- | Flip an image vertically.
 flipVertically :: (Pixel a) => Image a -> Image a
-flipVertically img@Image {..} =
+flipVertically img@Image{..} =
   generateImage gen imageWidth imageHeight
   where
     gen x y = pixelAt img x (imageHeight - 1 - y)
@@ -181,7 +181,7 @@ flipVertically img@Image {..} =
 
 -- | Rotate an image to the left by 90°.
 rotateLeft90 :: (Pixel a) => Image a -> Image a
-rotateLeft90 img@Image {..} =
+rotateLeft90 img@Image{..} =
   generateImage gen imageHeight imageWidth
   where
     gen x y = pixelAt img (imageWidth - 1 - y) x
@@ -189,7 +189,7 @@ rotateLeft90 img@Image {..} =
 
 -- | Rotate an image to the right by 90°.
 rotateRight90 :: (Pixel a) => Image a -> Image a
-rotateRight90 img@Image {..} =
+rotateRight90 img@Image{..} =
   generateImage gen imageHeight imageWidth
   where
     gen x y = pixelAt img y (imageHeight - 1 - x)
@@ -242,7 +242,7 @@ below = foldl1' go
 --
 -- @since 0.6.0
 square :: (Pixel a) => a -> Image a -> Image a
-square filler img@Image {..} =
+square filler img@Image{..} =
   if imageWidth == imageHeight
     then img
     else generateImage gen size size
